@@ -1,5 +1,12 @@
 {
-  "private": true,
+  "private": false,
+  "keyword": [
+    "json-editor",
+    "react",
+    "visualization editor",
+    "locastorage",
+    "cross-page"
+  ],
   "entry": {
     "index": "./index.js"
   },
