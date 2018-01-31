@@ -1,9 +1,9 @@
 import Trigger from './Trigger';
 import Wrapper from './Wrapper';
-import Main from './Main';
+import Preview from './Controller';
 
-PreviewController.Trigger = Trigger;
-PreviewController.Wrapper = Wrapper;
+Preview.Trigger = Trigger;
+Preview.Wrapper = Wrapper;
 
-export default PreviewController;
+export default Preview;
 export { Trigger, Wrapper };

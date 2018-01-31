@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
+import classNames from 'classnames';
 import _ from 'lodash';
+import { Icon } from 'antd';
 
 export default class PreviewWrapper extends PureComponent {
   static propTypes = {
@@ -26,7 +28,7 @@ export default class PreviewWrapper extends PureComponent {
     return (
       <div className={clx}>
         <div className="preview-wrapper-head">
-          <Icon type='close' onClick={this.close} />
+          <Icon type='close' onClick={() => this.close() } />
         </div>
         <div className="preview-wrapper-body">
           {children}

@@ -6,13 +6,13 @@ import Trigger from './Trigger';
 import Wrapper from './Wrapper';
 
 // 收起状态 or 打开状态
-const MODE= {
+const STATUS= {
   CLOSE: 'close',
   OPEN: 'open',
 };
 export default class PreviewController extends PureComponent {
   static propTypes = {
-    mode: PropTypes.string,
+    status: PropTypes.string,
     // trigger中的内容
     trigger: PropTypes.node.required,
     // conent中的内容
@@ -26,7 +26,7 @@ export default class PreviewController extends PureComponent {
   };
 
   static defaultProps = {
-    mode: MODE.CLOSE,
+    status: STATUS.CLOSE,
     previewable: true,
   };
 
@@ -37,16 +37,16 @@ export default class PreviewController extends PureComponent {
   }
 
   render() {
-    const { mode, trigger, children, previewable, onOpen } = this.props;
-    const clx = classNames('preview-controller', { mode });
+    const { status, trigger, children, previewable, onOpen, onClose } = this.props;
+    const clx = classNames('preview-controller', { status });
     const propsTrigger = {
         previewable,
-        visible: mode === MODE.CLOSE,
+        visible: status === STATUS.CLOSE,
         onOpen,
     };
     const propsWrapper = {
-        visible: mode === MODE.OPEN,
-        onClose
+        visible: status === STATUS.OPEN,
+        onClose,
     };
 
     return (
