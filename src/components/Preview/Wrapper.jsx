@@ -7,8 +7,6 @@ import { Icon } from 'antd';
 export default class PreviewWrapper extends PureComponent {
   static propTypes = {
     visible: PropTypes.bool,
-    // conent中的内容
-    children: PropTypes.node.required,
     // 打开模式下，点击关闭or收起
     onClose: PropTypes.func,
   };
@@ -27,11 +25,15 @@ export default class PreviewWrapper extends PureComponent {
 
     return (
       <div className={clx}>
-        <div className="preview-wrapper-head">
-          <Icon type='close' onClick={() => this.close() } />
-        </div>
-        <div className="preview-wrapper-body">
-          {children}
+        <div className="preview-wrapper-inner">
+          <div className="preview-wrapper-head">
+            <span onClick={() => this.close() }>
+              <Icon type='close' />
+            </span>
+          </div>
+          <div className="preview-wrapper-body">
+            {children}
+          </div>
         </div>
       </div>
     );

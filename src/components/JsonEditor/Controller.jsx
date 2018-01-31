@@ -2,8 +2,10 @@ import PropTypes, { object } from 'prop-types';
 import React, { PureComponent } from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
+import { Icon } from 'antd';
 import Preview from '../Preview';
 import EditPanel from './EditPanel';
+import './index.less';
 
 import jsonData from '../../mock/json';
 
@@ -25,7 +27,7 @@ export default class JsonEditorController extends PureComponent {
 
   static defaultProps = {
     mode: MODE.COMPONENT,
-    status: 'colse',
+    status: 'close',
     // loacalstorage 中的名称空间
     keyInStore: 'jsonEditor',
     // loacalstorage 中的名称空间中存储的键
@@ -73,15 +75,12 @@ export default class JsonEditorController extends PureComponent {
     const { jsonData } = this.state;
     const props = {
         status,
-        trigger: <div>open editor</div>,
+        trigger: <div className='json-editor-trigger'><Icon type="edit" />JSON</div>,
         onClose: this.togglePreview,
         onOpen: this.togglePreview,
+        children: <EditPanel data={jsonData} onChange={this.changeJsonData} />,
     };
-    return (
-      <Preview {...props}>
-        <EditPanel data={jsonData} onChange={this.changeJsonData} />
-      </Preview>
-    )
+    return (<Preview {...props} />);
   }
 
   renderPage() {
@@ -89,8 +88,7 @@ export default class JsonEditorController extends PureComponent {
   }
 
   render() {
-    const { mode } = this.props;
-    const { status } = this.state;
+    const { mode, status } = this.props;
 
     const clx = classNames('json-editor-controller');
     return (

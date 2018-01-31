@@ -23,7 +23,7 @@ export default class EditPanel extends PureComponent {
   };
 
   static defaultJsonData = {
-    theme: 'monokai',
+    theme: 'isotope', // monokai
     src: null,
     collapsed: false,
     collapseStringsAfter: 15,

@@ -4,6 +4,7 @@ import _ from 'lodash';
 import classNames from 'classnames';
 import Trigger from './Trigger';
 import Wrapper from './Wrapper';
+import './index.less';
 
 // 收起状态 or 打开状态
 const STATUS= {
@@ -14,9 +15,7 @@ export default class PreviewController extends PureComponent {
   static propTypes = {
     status: PropTypes.string,
     // trigger中的内容
-    trigger: PropTypes.node.required,
-    // conent中的内容
-    children: PropTypes.node.required,
+    trigger: PropTypes.any,
     // 收起模式下，点击trigger
     onOpen: PropTypes.func,
     // 打开模式下，点击关闭or收起
@@ -38,7 +37,7 @@ export default class PreviewController extends PureComponent {
 
   render() {
     const { status, trigger, children, previewable, onOpen, onClose } = this.props;
-    const clx = classNames('preview-controller', { status });
+    const clx = classNames('preview-controller', status);
     const propsTrigger = {
         previewable,
         visible: status === STATUS.CLOSE,
@@ -47,12 +46,12 @@ export default class PreviewController extends PureComponent {
     const propsWrapper = {
         visible: status === STATUS.OPEN,
         onClose,
+        children,
     };
-
     return (
       <div className={clx}>
         <Trigger {...propsTrigger}>{trigger}</Trigger>
-        <Wrapper {...propsWrapper}>{children}</Wrapper>
+        <Wrapper {...propsWrapper} />
       </div>
     );
   }
