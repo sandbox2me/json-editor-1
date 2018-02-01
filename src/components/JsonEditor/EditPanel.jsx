@@ -11,9 +11,9 @@ const EDITOR_STYLE = {
 };
 
 const OPER_TYPE = {
-  ADD: 'add',
-  DELETE: 'delete',
-  EDIT: 'edit',
+  ADD: 'ADD',
+  DELETE: 'DELETE',
+  EDIT: 'EDIT',
 };
 
 export default class EditPanel extends PureComponent {
@@ -48,10 +48,16 @@ export default class EditPanel extends PureComponent {
     this.state.src = props.data;
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (JSON.stringify(nextProps.data) !== JSON.stringify(this.state.src)) {
+      this.setState({ src: nextProps.data });
+    }
+  }
+
   changeJsonData = operType => event => {
     if (operType in OPER_TYPE) {
       const {updated_src: jsonData} = event;
-      this.props.onChage(jsonData);
+      this.props.onChange(jsonData);
     }
   };
 
@@ -60,11 +66,11 @@ export default class EditPanel extends PureComponent {
     const props = {
       ...others,
       name: null,
-      onAdd: onAdd ? () => this.changeJsonData(OPER_TYPE.ADD) : false,
-      onEdit: onEdit ? () => this.changeJsonData(OPER_TYPE.EDIT) : false,
-      onDelete: onDelete ? () => this.changeJsonData(OPER_TYPE.DELETE) : false,
+      onAdd: onAdd ? event => this.changeJsonData(OPER_TYPE.ADD).call(this, event) : false,
+      onEdit: onEdit ? event => this.changeJsonData(OPER_TYPE.EDIT).call(this, event) : false,
+      onDelete: onDelete ? event => this.changeJsonData(OPER_TYPE.DELETE).call(this, event) : false,
     };
-
+    
     const clx = classNames('json-editor-panel');
     return (
       <div className={clx}>

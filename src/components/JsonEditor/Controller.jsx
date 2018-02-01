@@ -62,7 +62,7 @@ export default class JsonEditorController extends PureComponent {
     if (fromStorage) {
       jsonData = getJsonDataFromStorage(keyInStore, currentKey);
     }
-
+    if (_.isString(jsonData)) jsonData = JSON.parse(jsonData);
     this.setState({ jsonData });
   };
 
@@ -78,9 +78,12 @@ export default class JsonEditorController extends PureComponent {
         trigger: <div className='json-editor-trigger'><Icon type="edit" />JSON</div>,
         onClose: this.togglePreview,
         onOpen: this.togglePreview,
-        children: <EditPanel data={jsonData} onChange={this.changeJsonData} />,
     };
-    return (<Preview {...props} />);
+    return (
+      <Preview {...props} >
+        <EditPanel data={jsonData} onChange={this.changeJsonData} />
+      </Preview>
+    );
   }
 
   renderPage() {
@@ -135,6 +138,8 @@ function sync2Storage(jsonData, namespace, key) {
     jsonNamespace[key] = jsonData;
     result = jsonNamespace;
   }
+
+  result = JSON.stringify(result);
   localStorage.setItem(namespace, result);
 
   return result;

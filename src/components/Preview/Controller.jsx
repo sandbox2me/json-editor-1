@@ -46,12 +46,11 @@ export default class PreviewController extends PureComponent {
     const propsWrapper = {
         visible: status === STATUS.OPEN,
         onClose,
-        children,
     };
     return (
       <div className={clx}>
         <Trigger {...propsTrigger}>{trigger}</Trigger>
-        <Wrapper {...propsWrapper} />
+        <Wrapper {...propsWrapper} >{children}</Wrapper>
       </div>
     );
   }
