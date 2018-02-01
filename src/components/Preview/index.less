@@ -17,7 +17,7 @@
     background: #ccc;
 
     .preview-wrapper-inner {
-      padding: 32px;
+      padding: 16px 32px;
       background: #fff;
       width: 100%;
       height: 100%;
@@ -29,7 +29,13 @@
       height: 100vh;
 
       .preview-wrapper-head {
-        text-align: right;
+        display: flex;
+        justify-content: space-between;
+
+        .json-preview-header {
+          font-size: 18px;
+        }
+
         .anticon-close {
           font-size: 24px;
           cursor: pointer;

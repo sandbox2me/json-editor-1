@@ -9,6 +9,7 @@ export default class PreviewWrapper extends PureComponent {
     visible: PropTypes.bool,
     // 打开模式下，点击关闭or收起
     onClose: PropTypes.func,
+    header: PropTypes.any,
   };
 
   static defaultProps = {
@@ -20,16 +21,17 @@ export default class PreviewWrapper extends PureComponent {
   }
 
   render() {
-    const { visible, children } = this.props;
+    const { visible, header, children } = this.props;
     const clx = classNames('preview-wrapper', { visible });
 
     return (
       <div className={clx}>
         <div className="preview-wrapper-inner">
           <div className="preview-wrapper-head">
-            <span onClick={() => this.close() }>
+            <div className="json-preview-header">{header}</div>
+            <div className="preview-close" onClick={() => this.close() }>
               <Icon type='close' />
-            </span>
+            </div>
           </div>
           <div className="preview-wrapper-body">
             {children}

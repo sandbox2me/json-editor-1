@@ -25,7 +25,8 @@ export default class App extends PureComponent {
       <div style={{ margin: 100 }}>
         <h1>Json-editor Demo</h1>
         <hr /><br />
-        <JsonEditor status={status} onToggle={this.toggle} />
+        <h3>点击右下角哦~ ~</h3>
+        <JsonEditor status={status} onToggle={this.toggle} header={<p>Json panel: Hello world</p>}/>
       </div>
     );
   }

@@ -2,16 +2,14 @@ import PropTypes, { object } from 'prop-types';
 import React, { PureComponent } from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
-import { Icon } from 'antd';
-import Preview from '../Preview';
-import EditPanel from './EditPanel';
+import PreviewContent from './PreviewContent';
 import './index.less';
 
 import jsonData from '../../mock/json';
 
 const MODE = {
-    PAGE: 'page',
-    COMPONENT: 'component',
+    PAGE: 'PAGE',
+    COMPONENT: 'COMPONENT',
 };
 export default class JsonEditorController extends PureComponent {
   static propTypes = {
@@ -23,6 +21,10 @@ export default class JsonEditorController extends PureComponent {
     toggle: PropTypes.func,
     keyInStore: PropTypes.string,
     currentKey: PropTypes.string,
+    header: PropTypes.oneOfType([
+      PropTypes.node,
+      PropTypes.func,
+    ]),
   };
 
   static defaultProps = {
@@ -32,6 +34,7 @@ export default class JsonEditorController extends PureComponent {
     keyInStore: 'jsonEditor',
     // loacalstorage 中的名称空间中存储的键
     defaultCurrentKey: 'jsonKey',
+    header: null,
 };
 
   constructor(props) {
@@ -71,18 +74,17 @@ export default class JsonEditorController extends PureComponent {
   }
 
   renderPreview() {
-    const { status } = this.props;
+    const { status, header } = this.props;
     const { jsonData } = this.state;
-    const props = {
-        status,
-        trigger: <div className='json-editor-trigger'><Icon type="edit" />JSON</div>,
-        onClose: this.togglePreview,
-        onOpen: this.togglePreview,
-    };
+
     return (
-      <Preview {...props} >
-        <EditPanel data={jsonData} onChange={this.changeJsonData} />
-      </Preview>
+      <PreviewContent
+        status={status}
+        jsonData={jsonData}
+        onToggle={this.togglePreview}
+        onChange={this.changeJsonData}
+        header={header ? header : null}
+      />
     );
   }
 

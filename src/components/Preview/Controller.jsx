@@ -16,6 +16,8 @@ export default class PreviewController extends PureComponent {
     status: PropTypes.string,
     // trigger中的内容
     trigger: PropTypes.any,
+    // 预览展开时，JSON编辑区顶部的组件
+    header: PropTypes.any,
     // 收起模式下，点击trigger
     onOpen: PropTypes.func,
     // 打开模式下，点击关闭or收起
@@ -36,7 +38,7 @@ export default class PreviewController extends PureComponent {
   }
 
   render() {
-    const { status, trigger, children, previewable, onOpen, onClose } = this.props;
+    const { status, trigger, header, children, previewable, onOpen, onClose } = this.props;
     const clx = classNames('preview-controller', status);
     const propsTrigger = {
         previewable,
@@ -45,6 +47,7 @@ export default class PreviewController extends PureComponent {
     };
     const propsWrapper = {
         visible: status === STATUS.OPEN,
+        header,
         onClose,
     };
     return (
