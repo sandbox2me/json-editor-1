@@ -35,8 +35,8 @@ export const I18N = {
   label: {
     theme: '主题',
     collapsed: '收起',
-    collapseStringsAfter: '收起最长字符数',
-    displayObjectSize: '主题',
+    collapseStringsAfter: '最长字符数',
+    displayObjectSize: '显示对象大小',
     enableClipboard: '可编辑',
     indentWidth: '前缀空格数',
     displayDataTypes: '显示数据类型',
@@ -76,4 +76,9 @@ export const I18N = {
     {value: 'tube', label: 'tube'},
     {value: 'twilight', label: 'twilight'},
   ],
+  iconStyles: [
+    {value: 'triangle', label: '三角形'},
+    {value: 'square', label: '正方形'},
+    {value: 'circle', label: '圆形'},
+  ]
 };

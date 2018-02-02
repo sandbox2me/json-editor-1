@@ -1,40 +1,45 @@
 .json-editor-toolbar {
-  padding: 8px;
-  background: #f8f8f8;
-  border: 1px solid #f8f8f8;
-  border-radius: 4px;
+  display: inline-block;
+  width: auto;
 
-  ul {
-    margin-bottom: 0;
-    padding: 0;
-    display: inline-block;
-    list-style-type: none;
-    li {
+  .json-editor-toolbar-inner {
+    padding: 8px;
+    background: #f8f8f8;
+    border: 1px solid #f8f8f8;
+    border-radius: 4px;
+
+    ul {
+      margin-bottom: 0;
+      padding: 0;
+      display: inline-block;
+      list-style-type: none;
+      li {
+        margin-right: 16px;
+        display: inline-block;
+      }
+    }
+
+    .json-toolbox-title {
       margin-right: 16px;
+      padding-right: 8px;
       display: inline-block;
-    }
-  }
-
-  .json-toolbox-title {
-    margin-right: 16px;
-    padding-right: 8px;
-    display: inline-block;
-    font-size: 15px;
-    font-weight: bold;
-    border-right: 2px solid #ddd;
-  }
-
-  .toolbar-item {
-    display: inline-block;
-
-    .toolbar-header {
-      display: inline-block;
-      margin-right: 4px;
-      font-size: 14px;
+      font-size: 15px;
+      font-weight: bold;
+      border-right: 2px solid #ddd;
     }
 
-    .toolbar-body {
+    .toolbar-item {
       display: inline-block;
+
+      .toolbar-header {
+        display: inline-block;
+        margin-right: 4px;
+        font-size: 14px;
+      }
+
+      .toolbar-body {
+        display: inline-block;
+      }
     }
   }
 }

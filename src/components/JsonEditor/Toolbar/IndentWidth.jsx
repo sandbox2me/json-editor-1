@@ -5,8 +5,8 @@ import { Input } from 'antd';
 import {I18N} from '../../../../src/constants';
 import ToolbarItem from './ToolbarItem';
 
-function CollapseStringsAfter({value, onChange}) {
-  const label = I18N.label.collapseStringsAfter;
+function IndentWidth({value, onChange}) {
+  const label = I18N.label.indentWidth;
   const props = {
     value: Number(value),
     type: 'number',
@@ -20,9 +20,9 @@ function CollapseStringsAfter({value, onChange}) {
   );
 }
 
-export default CollapseStringsAfter;
+export default IndentWidth;
 
-CollapseStringsAfter.propTypes = {
+IndentWidth.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string

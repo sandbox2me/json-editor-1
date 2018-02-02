@@ -3,16 +3,23 @@ import React, {PureComponent} from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
 import {MODE, I18N} from '../../../../src/constants';
+
+// Toolbar中的 item
 import Theme from './Theme';
 import Collapsed from './Collapsed';
 import EnableClipboard from './EnableClipboard';
-/* CollapseStringsAfter,
-  IconStyle,
-  FILEINPUT,
+import CollapseStringsAfter from './CollapseStringsAfter';
+import IconStyle from './IconStyle';
+import IndentWidth from './IndentWidth';
+import DisplayDataTypes from './DisplayDataTypes';
+/* FILEINPUT,
   FILEOUTPUT, */
 import './index.less';
 
-const MODE_TOOLTYPE_COMMON = ['theme', 'collapsed', 'enableClipboard']; // , 'collapseStringsAfter', 'iconStyle'
+const MODE_TOOLTYPE_COMMON = [
+  'theme', 'collapsed', 'enableClipboard', 'collapseStringsAfter',
+  'iconStyle', 'indentWidth', 'displayDataTypes'
+];
 const MODE_TOOLTYPE = {
   COMPONENT: MODE_TOOLTYPE_COMMON,
   PAGE: [] /* MODE_TOOLTYPE_COMMON.concat([FILEINPUT, FILEOUTPUT]) */,
@@ -21,11 +28,16 @@ const STR_COMPONENT = {
   theme: Theme,
   collapsed: Collapsed,
   enableClipboard: EnableClipboard,
-/*
   collapseStringsAfter: CollapseStringsAfter,
   enableClipboard: EnableClipboard,
-  iconStyle: IconStyle, */
+  iconStyle: IconStyle,
+  indentWidth: IndentWidth,
+  displayDataTypes: DisplayDataTypes,
 };
+const SORT_SQUENCE = [
+  'theme', 'iconStyle', 'indentWidth', 'collapseStringsAfter', 
+  'collapsed', 'displayDataTypes', 'enableClipboard',
+];
 export default class ToolbarController extends PureComponent {
   static propTypes = {
     mode: PropTypes.string,
@@ -46,17 +58,22 @@ export default class ToolbarController extends PureComponent {
     const clx = classNames('json-editor-toolbar');
     return (
       <div className={clx}>
-        <span className="json-toolbox-title">{I18N.toolbox.title}</span>
-        <ul> {
-          Object.keys(data)
-            .filter(type => tooltypes.includes(type))
-            .map(type => {
-              const value = data[type];
-              const Comp = STR_COMPONENT[type];
-              const key = `toolbox-item-${type}`;
-              return <li key={key}><Comp value={value} onChange={this.change(type)} /></li>;
-            })
-        } </ul>
+        <div className="json-editor-toolbar-inner">
+          <span className="json-toolbox-title">{I18N.toolbox.title}</span>
+          <ul> {
+            Object.keys(data)
+              .filter(type => tooltypes.includes(type))
+              .sort((a, b) => {
+                return SORT_SQUENCE.indexOf(a) > SORT_SQUENCE.indexOf(b);
+              })
+              .map(type => {
+                const value = data[type];
+                const Comp = STR_COMPONENT[type];
+                const key = `toolbox-item-${type}`;
+                return <li key={key}><Comp value={value} onChange={this.change(type)} /></li>;
+              })
+          } </ul>
+        </div>
       </div>
     );
   }
