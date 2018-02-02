@@ -3,7 +3,7 @@ import React, {PureComponent} from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
 import {MODE} from '../../../src/constants';
-import PreviewView from './PreviewView';
+import ComponentView from './ComponentView';
 import PageView from './PageView';
 import './index.less';
 import Toolbar from './Toolbar';
@@ -81,7 +81,7 @@ export default class JsonEditorController extends PureComponent {
     const {jsonData, jsonEditorConfig} = this.state;
 
     return (
-      <PreviewView
+      <ComponentView
         mode={mode}
         jsonEditorConfig={jsonEditorConfig}
         status={status}

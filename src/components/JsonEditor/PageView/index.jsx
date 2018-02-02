@@ -8,6 +8,9 @@ import Toolbar from '../Toolbar';
 
 import './index.less';
 
+/**
+ * @page Json编辑管理页面的独立页面中的调用(对应此编辑器功能以组件的方式在页面中调用)
+ */
 export default class PageView extends PureComponent {
   static propTypes = {
     mode: PropTypes.string,

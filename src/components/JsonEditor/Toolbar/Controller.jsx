@@ -48,8 +48,7 @@ export default class ToolbarController extends PureComponent {
   change = type => value => {
     const {data, onChange} = this.props;
     const newData = {...data, [type]: value};
-    console.log('-------type--------');
-    console.log(type);
+    console.log('-------change editor value--------');
     console.log(value);
     onChange(newData);
   };

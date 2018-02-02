@@ -10,7 +10,10 @@ import Toolbar from '../Toolbar';
 
 import './index.less';
 
-export default class PreviewView extends PureComponent {
+/**
+ * @component 此编辑器功能以组件的方式在页面中调用(对应Json编辑管理页面的独立页面中的调用)
+ */
+export default class ComponentView extends PureComponent {
   static propTypes = {
     mode: PropTypes.string,
     status: PropTypes.string,

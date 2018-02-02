@@ -46,8 +46,6 @@ export default class EditPanel extends PureComponent {
       onEdit: onEdit ? event => this.changeJsonData(OPER_TYPE.EDIT).call(this, event) : false,
       onDelete: onDelete ? event => this.changeJsonData(OPER_TYPE.DELETE).call(this, event) : false,
     };
-    console.log('-------others--------');
-    console.log(props);
     const clx = classNames('json-editor-panel');
     return (
       <div className={clx}>
