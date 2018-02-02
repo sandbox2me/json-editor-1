@@ -10,7 +10,7 @@ function ToolbarItem({label, children}) {
   };
   return (
     <div className={clx.wraper}>
-      <span className={clx.header}>{label}</span>
+      <span className={clx.header}>{label}：</span>
       <span className={clx.body}>{children}</span>
     </div>
   );
