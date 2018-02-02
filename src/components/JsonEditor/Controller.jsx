@@ -1,12 +1,14 @@
-import PropTypes, { object } from 'prop-types';
-import React, { PureComponent } from 'react';
+import PropTypes, {object} from 'prop-types';
+import React, {PureComponent} from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
-import { MODE } from '../../../src/constants';
-import PreviewContent from './PreviewContent';
+import {MODE} from '../../../src/constants';
+import PreviewView from './PreviewView';
+import PageView from './PageView';
 import './index.less';
 import Toolbar from './Toolbar';
-import { JSON_EDITOR_CONFIG } from '../../../src/constants';
+import {JSON_EDITOR_CONFIG} from '../../../src/constants';
+import {getJsonDataFromStorage, sync2Storage} from '../../../src/util';
 
 import jsonData from '../../mock/json';
 
@@ -20,10 +22,7 @@ export default class JsonEditorController extends PureComponent {
     toggle: PropTypes.func,
     keyInStore: PropTypes.string,
     currentKey: PropTypes.string,
-    header: PropTypes.oneOfType([
-      PropTypes.node,
-      PropTypes.func,
-    ]),
+    header: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
   static defaultProps = {
@@ -34,14 +33,14 @@ export default class JsonEditorController extends PureComponent {
     // loacalstorage 中的名称空间中存储的键
     defaultCurrentKey: 'jsonKey',
     header: null,
-};
+  };
 
   constructor(props) {
     super(props);
     this.state = {
-        jsonData: jsonData,
-        currentKey: props.currentKey || props.defaultCurrentKey,
-        jsonEditorConfig: { ...JSON_EDITOR_CONFIG },
+      jsonData: jsonData,
+      currentKey: props.currentKey || props.defaultCurrentKey,
+      jsonEditorConfig: {...JSON_EDITOR_CONFIG},
     };
   }
 
@@ -52,37 +51,37 @@ export default class JsonEditorController extends PureComponent {
   }
 
   changeJsonData = jsonData => {
-    const { keyInStore } = this.props;
-    const { currentKey } = this.state;
+    const {keyInStore} = this.props;
+    const {currentKey} = this.state;
     sync2Storage(jsonData, keyInStore, currentKey);
 
     this.updateJsonData(jsonData);
   };
 
   updateJsonData = (jsonData, fromStorage) => {
-    const { keyInStore } = this.props;
-    const { currentKey } = this.state;
+    const {keyInStore} = this.props;
+    const {currentKey} = this.state;
     if (fromStorage) {
       jsonData = getJsonDataFromStorage(keyInStore, currentKey);
     }
     if (_.isString(jsonData)) jsonData = JSON.parse(jsonData);
-    this.setState({ jsonData });
+    this.setState({jsonData});
   };
 
   togglePreview = () => {
     this.props.onToggle();
-  }
+  };
 
   changeJsonEditorConfig = jsonEditorConfig => {
-    this.setState({ jsonEditorConfig });
-  }
+    this.setState({jsonEditorConfig});
+  };
 
   renderPreview() {
-    const { status, header, mode } = this.props;
-    const { jsonData, jsonEditorConfig } = this.state;
+    const {status, header, mode} = this.props;
+    const {jsonData, jsonEditorConfig} = this.state;
 
     return (
-      <PreviewContent
+      <PreviewView
         mode={mode}
         jsonEditorConfig={jsonEditorConfig}
         status={status}
@@ -96,60 +95,30 @@ export default class JsonEditorController extends PureComponent {
   }
 
   renderPage() {
-    return <span>xixi</span>;
+    const {header, mode} = this.props;
+    const {jsonData, jsonEditorConfig} = this.state;
+
+    return (
+      <PageView
+        mode={mode}
+        jsonEditorConfig={jsonEditorConfig}
+        status={status}
+        jsonData={jsonData}
+        onChange={this.changeJsonData}
+        onChangeConfig={this.changeJsonEditorConfig}
+        header={header ? header : null}
+      />
+    );
   }
 
   render() {
-    const { mode, status } = this.props;
+    const {mode, status} = this.props;
 
     const clx = classNames('json-editor-controller');
     return (
-      <div>{
-        mode === MODE.COMPONENT ?
-        this.renderPreview() : 
-        this.renderPage()
-      }</div>
+      <div>
+        {mode === MODE.COMPONENT ? this.renderPreview() : this.renderPage()}
+      </div>
     );
   }
-}
-
-/**
- * 从localStorage中取出指定名称空间中指定key中的数据，并以json格式返回
- * @param {*} namespace 
- * @param {*} key 
- */
-function getJsonDataFromStorage(namespace, key) {
-  const dataStorage = localStorage.getItem(namespace);
-
-  if (_.isEmpty(dataStorage)) return '';
-
-  const data = _.get(dataStorage, key);
-
-  if (_.isEmpty(data)) return '';
-
-  return JSON.parse(data);
-}
-
-/**
- * 将json数据同步存储到localStorage中
- * @param {*} jsonData 
- * @param {*} namespace 
- * @param {*} key 
- */
-function sync2Storage(jsonData, namespace, key) {
-  const dataStorage = localStorage.getItem(namespace);
-
-  let result;
-  if (!dataStorage) {
-    result = { [namespace]: { [key]: jsonData } };
-  } else {
-    const jsonNamespace = JSON.parse(dataStorage);
-    jsonNamespace[key] = jsonData;
-    result = jsonNamespace;
-  }
-
-  result = JSON.stringify(result);
-  localStorage.setItem(namespace, result);
-
-  return result;
 }

@@ -22,7 +22,7 @@ const MODE_TOOLTYPE_COMMON = [
 ];
 const MODE_TOOLTYPE = {
   COMPONENT: MODE_TOOLTYPE_COMMON,
-  PAGE: [] /* MODE_TOOLTYPE_COMMON.concat([FILEINPUT, FILEOUTPUT]) */,
+  PAGE: [...MODE_TOOLTYPE_COMMON] /* MODE_TOOLTYPE_COMMON.concat([FILEINPUT, FILEOUTPUT]) */,
 };
 const STR_COMPONENT = {
   theme: Theme,
@@ -55,9 +55,8 @@ export default class ToolbarController extends PureComponent {
     const {mode, data} = this.props;
     const tooltypes = MODE_TOOLTYPE[mode];
 
-    const clx = classNames('json-editor-toolbar');
     return (
-      <div className={clx}>
+      <div className="json-editor-toolbar">
         <div className="json-editor-toolbar-inner">
           <div className="json-toolbox-title">{I18N.toolbox.title}</div>
           <ul> {

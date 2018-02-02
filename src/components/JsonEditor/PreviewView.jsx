@@ -8,7 +8,7 @@ import Preview from '../Preview';
 import EditPanel from './EditPanel';
 import Toolbar from './Toolbar';
 
-export default class PreviewContent extends PureComponent {
+export default class PreviewView extends PureComponent {
   static propTypes = {
     mode: PropTypes.string,
     status: PropTypes.string,
