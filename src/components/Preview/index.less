@@ -16,17 +16,23 @@
     overflow: hidden;
     background: #ccc;
 
+    transition: width 0.6s ease-in-out;
+    transition: height 0.6s ease-in-out;
+    
     .preview-wrapper-inner {
       padding: 16px 32px;
-      background: #fff;
       width: 100%;
       height: 100%;
+      background: #fff;
     }
   }
   &.open {
     .preview-wrapper {
       width: 100%;
       height: 100vh;
+
+      transition: width 0.6s ease-in-out;
+      transition: height 0.6s ease-in-out;
 
       .preview-wrapper-head {
         display: flex;
@@ -43,5 +49,12 @@
         }
       }
     }
+  }
+  &.close {
+    width: 0;
+    height: 0;
+
+    transition: width 0.6s ease-in-out;
+    transition: height 0.6s ease-in-out;
   }
 }

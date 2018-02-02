@@ -4,28 +4,32 @@
 
   .json-editor-toolbar-inner {
     padding: 8px;
+    display: flex;
     background: #f8f8f8;
     border: 1px solid #f8f8f8;
     border-radius: 4px;
-
-    ul {
-      margin-bottom: 0;
-      padding: 0;
-      display: inline-block;
-      list-style-type: none;
-      li {
-        margin-right: 16px;
-        display: inline-block;
-      }
-    }
 
     .json-toolbox-title {
       margin-right: 16px;
       padding-right: 8px;
       display: inline-block;
+      width: 86px;
+      line-height: 1;
       font-size: 15px;
       font-weight: bold;
       border-right: 2px solid #ddd;
+    }
+
+    ul {
+      margin-bottom: 0;
+      padding: 0;
+      flex: 1;
+      list-style-type: none;
+
+      li {
+        margin-right: 16px;
+        display: inline-block;
+      }
     }
 
     .toolbar-item {

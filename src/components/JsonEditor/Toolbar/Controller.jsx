@@ -59,7 +59,7 @@ export default class ToolbarController extends PureComponent {
     return (
       <div className={clx}>
         <div className="json-editor-toolbar-inner">
-          <span className="json-toolbox-title">{I18N.toolbox.title}</span>
+          <div className="json-toolbox-title">{I18N.toolbox.title}</div>
           <ul> {
             Object.keys(data)
               .filter(type => tooltypes.includes(type))
