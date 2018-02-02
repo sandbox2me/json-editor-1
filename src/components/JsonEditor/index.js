@@ -1,5 +1,8 @@
-import EditPanel from './EditPanel.jsx';
-import Controller from './Controller.jsx';
+import Toolbar from './Toolbar';
+import EditPanel from './EditPanel';
+import PreviewView from './PreviewView';
+import PageView from './PageView';
+import Controller from './Controller';
 
 export default Controller;
-export { EditPanel };
+export { PageView, PreviewView, EditPanel, Toolbar };

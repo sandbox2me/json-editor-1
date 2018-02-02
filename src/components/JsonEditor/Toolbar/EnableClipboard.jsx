@@ -6,9 +6,11 @@ import {I18N} from '../../../../src/constants';
 import ToolbarItem from './ToolbarItem';
 
 function EnableClipboard({value, onChange}) {
+  console.log('-------value--------');
+  console.log(value);
   return (
     <ToolbarItem label={I18N.label.enableClipboard}>
-      <Checkbox value={value} onChange={e => { onChange(e.target.checked); }} />
+      <Checkbox checked={value} onChange={e => { onChange(e.target.checked); }} />
     </ToolbarItem>
   );
 }

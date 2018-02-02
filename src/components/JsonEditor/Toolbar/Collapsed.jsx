@@ -8,7 +8,7 @@ import ToolbarItem from './ToolbarItem';
 function Collapsed({value, onChange}) {
   return (
     <ToolbarItem label={I18N.label.collapsed}>
-      <Checkbox value={value} onChange={e => { onChange(e.target.checked); }} />
+      <Checkbox checked={value} onChange={e => { onChange(e.target.checked); }} />
     </ToolbarItem>
   );
 }

@@ -4,9 +4,9 @@ import _ from 'lodash';
 
 function ToolbarItem({label, children}) {
   const clx = {
-      wraper: 'toolbar-item',
-      header: 'toolbar-header',
-      body: 'toolbar-body',
+    wraper: 'toolbar-item',
+    header: 'toolbar-header',
+    body: 'toolbar-body',
   };
   return (
     <div className={clx.wraper}>
