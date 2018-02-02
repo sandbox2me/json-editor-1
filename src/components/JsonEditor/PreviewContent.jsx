@@ -6,15 +6,20 @@ import {Icon} from 'antd';
 import PreviewTrigger from './PreviewTrigger';
 import Preview from '../Preview';
 import EditPanel from './EditPanel';
+import Toolbar from './Toolbar';
 
 export default class PreviewContent extends PureComponent {
   static propTypes = {
+    mode: PropTypes.string,
     status: PropTypes.string,
     // Preview触发组件
     trigger: PropTypes.node,
     jsonData: PropTypes.objectOf(PropTypes.any),
+    // 对json-editor的配置，如可视化展示方式等
+    jsonEditorConfig: PropTypes.objectOf(PropTypes.any),
     onToggle: PropTypes.func,
     onChange: PropTypes.func,
+    onChangeConfig: PropTypes.func,
     header: PropTypes.oneOfType([
       PropTypes.node,
       PropTypes.func
@@ -22,11 +27,14 @@ export default class PreviewContent extends PureComponent {
   };
 
   render() {
-    const {status, jsonData, header, onToggle, onChange} = this.props;
-
+    const {mode, status, jsonData, jsonEditorConfig, header, onToggle, onChange, onChangeConfig} = this.props;
+    const headers = [
+      header,
+      <Toolbar key="jsonEditorToolbar" mode={mode} data={jsonEditorConfig} onChange={onChangeConfig}/>
+    ];
     const props = {
       status,
-      header,
+      header: headers,
       trigger: <PreviewTrigger />,
       onClose: onToggle,
       onOpen: onToggle,
@@ -34,7 +42,7 @@ export default class PreviewContent extends PureComponent {
 
     return (
       <Preview {...props}>
-        <EditPanel data={jsonData} onChange={onChange} />
+        <EditPanel jsonEditorConfig={jsonEditorConfig} data={jsonData} onChange={onChange} />
       </Preview>
     );
   }

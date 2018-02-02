@@ -2,15 +2,14 @@ import PropTypes, { object } from 'prop-types';
 import React, { PureComponent } from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
+import { MODE } from '../../../src/constants';
 import PreviewContent from './PreviewContent';
 import './index.less';
+import Toolbar from './Toolbar';
+import { JSON_EDITOR_CONFIG } from '../../../src/constants';
 
 import jsonData from '../../mock/json';
 
-const MODE = {
-    PAGE: 'PAGE',
-    COMPONENT: 'COMPONENT',
-};
 export default class JsonEditorController extends PureComponent {
   static propTypes = {
     status: PropTypes.string,
@@ -42,6 +41,7 @@ export default class JsonEditorController extends PureComponent {
     this.state = {
         jsonData: jsonData,
         currentKey: props.currentKey || props.defaultCurrentKey,
+        jsonEditorConfig: { ...JSON_EDITOR_CONFIG },
     };
   }
 
@@ -73,16 +73,23 @@ export default class JsonEditorController extends PureComponent {
     this.props.onToggle();
   }
 
+  changeJsonEditorConfig = jsonEditorConfig => {
+    this.setState({ jsonEditorConfig });
+  }
+
   renderPreview() {
-    const { status, header } = this.props;
-    const { jsonData } = this.state;
+    const { status, header, mode } = this.props;
+    const { jsonData, jsonEditorConfig } = this.state;
 
     return (
       <PreviewContent
+        mode={mode}
+        jsonEditorConfig={jsonEditorConfig}
         status={status}
         jsonData={jsonData}
         onToggle={this.togglePreview}
         onChange={this.changeJsonData}
+        onChangeConfig={this.changeJsonEditorConfig}
         header={header ? header : null}
       />
     );

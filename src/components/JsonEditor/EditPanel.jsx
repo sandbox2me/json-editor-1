@@ -3,18 +3,7 @@ import React, {PureComponent} from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
 import JsonView from 'react-json-view';
-
-const EDITOR_STYLE = {
-  padding: '10px',
-  borderRadius: '3px',
-  margin: '10px 0px',
-};
-
-const OPER_TYPE = {
-  ADD: 'ADD',
-  DELETE: 'DELETE',
-  EDIT: 'EDIT',
-};
+import { OPER_TYPE } from '../../../src/constants';
 
 export default class EditPanel extends PureComponent {
   static propTypes = {
@@ -22,35 +11,20 @@ export default class EditPanel extends PureComponent {
     data: PropTypes.any,
   };
 
-  static defaultJsonData = {
-    theme: 'isotope', // monokai
-    src: null,
-    collapsed: false,
-    collapseStringsAfter: 15,
-    onAdd: true,
-    onEdit: true,
-    onDelete: true,
-    displayObjectSize: true,
-    enableClipboard: true,
-    indentWidth: 4,
-    displayDataTypes: true,
-    iconStyle: 'triangle',
-    style: EDITOR_STYLE,
-  };
-
   constructor(props) {
     super(props);
 
-    this.state = {};
-    for (var key in EditPanel.defaultJsonData) {
-      this.state[key] = EditPanel.defaultJsonData[key];
-    }
-    this.state.src = props.data;
+    const { data, jsonEditorConfig } = props;
+
+    this.state = { data, jsonEditorConfig };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (JSON.stringify(nextProps.data) !== JSON.stringify(this.state.src)) {
-      this.setState({ src: nextProps.data });
+    if (JSON.stringify(nextProps.data) !== JSON.stringify(this.state.data)) {
+      this.setState({ data: nextProps.data });
+    }
+    if (JSON.stringify(nextProps.jsonEditorConfig) !== JSON.stringify(this.state.jsonEditorConfig)) {
+      this.setState({ jsonEditorConfig: nextProps.jsonEditorConfig });
     }
   }
 
@@ -62,9 +36,11 @@ export default class EditPanel extends PureComponent {
   };
 
   render() {
-    const {onAdd, onEdit, onDelete, ...others} = this.state;
+    const { data, jsonEditorConfig } = this.state;
+    const {onAdd, onEdit, onDelete, ...others} = jsonEditorConfig;
     const props = {
       ...others,
+      src: data,
       name: null,
       onAdd: onAdd ? event => this.changeJsonData(OPER_TYPE.ADD).call(this, event) : false,
       onEdit: onEdit ? event => this.changeJsonData(OPER_TYPE.EDIT).call(this, event) : false,
