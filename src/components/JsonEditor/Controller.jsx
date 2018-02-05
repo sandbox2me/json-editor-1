@@ -113,6 +113,7 @@ export default class JsonEditorController extends PureComponent {
     if (fromStorage) {
       jsonData = getJsonDataFromStorage(keyInStore, currentKey);
     }
+
     if (_.isString(jsonData)) jsonData = JSON.parse(jsonData);
     this.setState({jsonData});
   };
@@ -128,6 +129,12 @@ export default class JsonEditorController extends PureComponent {
     this.setState({jsonEditorConfig});
   };
 
+  getHeader = () => {
+    const {header} = this.props;
+
+    return header ? header : null;
+  }
+
   renderPreview() {
     const {status, header, mode} = this.props;
     const {jsonData, jsonEditorConfig} = this.state;
@@ -140,7 +147,7 @@ export default class JsonEditorController extends PureComponent {
         onToggle={this.togglePreview}
         onChange={this.changeJsonData}
         onChangeConfig={this.changeJsonEditorConfig}
-        header={header ? header : null}
+        header={this.getHeader()}
       />
     );
   }
@@ -157,7 +164,7 @@ export default class JsonEditorController extends PureComponent {
         jsonData={jsonData}
         onChange={this.changeJsonData}
         onChangeConfig={this.changeJsonEditorConfig}
-        header={header ? header : null}
+        header={this.getHeader()}
       />
     );
   }

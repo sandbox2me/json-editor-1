@@ -21,14 +21,16 @@ export default class PreviewWrapper extends PureComponent {
   }
 
   render() {
-    const { visible, header, children } = this.props;
+    const { visible, header, children, namespace } = this.props;
     const clx = classNames('preview-wrapper', { visible });
 
     return (
       <div className={clx}>
         <div className="preview-wrapper-inner">
           <div className="preview-wrapper-head">
-            <div className="json-preview-header">{header}</div>
+            <div className="json-preview-header">
+              {header}
+            </div>
             <div className="preview-close" onClick={() => this.close() }>
               <Icon type='close' />
             </div>
