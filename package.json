@@ -50,5 +50,8 @@
     "start": "dora --plugins webpack",
     "test": "atool-test-mocha ./**/__tests__/*-test.js"
   },
-  "author": "shifei.sf"
+  "author": "shifei.sf",
+  "publishConfig": {
+    "registry": "http://registry.npm.alibaba-inc.com"
+  }
 }
