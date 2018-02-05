@@ -1,5 +1,8 @@
 import Controller from './Controller';
-import Trigger from './Trigger';
+import PreviewTrigger from './PreviewTrigger';
+import EditTigger from './EditTigger';
 
+Controller.EditTigger = EditTigger;
 export default Controller;
-export { Trigger };
+
+export { PreviewTrigger, EditTigger };

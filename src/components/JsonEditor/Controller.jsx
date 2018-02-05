@@ -7,10 +7,11 @@ import ComponentView from './ComponentView';
 import PageView from './PageView';
 import './index.less';
 import Toolbar from './Toolbar';
-import {JSON_EDITOR_CONFIG} from '../../../src/constants';
+import {KEY_IN_STORE, JSON_EDITOR_CONFIG, JSON_EDITOR_EVENT, EDITOR_PANEL_STATUS, JSON_EDITED_EVENT} from '../../../src/constants';
 import {getJsonDataFromStorage, sync2Storage} from '../../../src/util';
+import { emitter } from './index';
 
-import jsonData from '../../mock/json';
+// import jsonData from '../../mock/json';
 
 export default class JsonEditorController extends PureComponent {
   static propTypes = {
@@ -27,9 +28,9 @@ export default class JsonEditorController extends PureComponent {
 
   static defaultProps = {
     mode: MODE.COMPONENT,
-    status: 'close',
+    status: EDITOR_PANEL_STATUS.close,
     // loacalstorage 中的名称空间
-    keyInStore: 'jsonEditor',
+    keyInStore: KEY_IN_STORE,
     // loacalstorage 中的名称空间中存储的键
     defaultCurrentKey: 'jsonKey',
     header: null,
@@ -38,7 +39,7 @@ export default class JsonEditorController extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      jsonData: jsonData,
+      jsonData: {},
       currentKey: props.currentKey || props.defaultCurrentKey,
       jsonEditorConfig: {...JSON_EDITOR_CONFIG},
     };
@@ -48,19 +49,67 @@ export default class JsonEditorController extends PureComponent {
     if (!this.state.jsonData) {
       this.updateJsonData(null, true);
     }
+
+    this.watchEditorEvent();
+  }
+
+  componentWillUnmount() {
+    emitter.removeAllListeners();
+    self.triggeredByEditEvent = false;
+  }
+
+  // 监听json编辑触发键的点击事件：同步触发键中的信息到localStorage & 触发编辑面板的展示
+  watchEditorEvent = () => {
+    const { status } = this.props;
+    const self = this;
+    const { close } = EDITOR_PANEL_STATUS;
+
+    emitter.addListener(JSON_EDITOR_EVENT, function(jsonInfo) {
+      if (status === close) {
+        self.triggeredByEditEvent = true;
+        self.handleEditorEvent(jsonInfo);
+      }
+    });
+  }
+
+  // jsonInfo: {[currentKey]: jsonData}
+  handleEditorEvent = jsonInfo => {
+    const {keyInStore} = this.props;
+
+    if (_.size(jsonInfo)) {
+      const currentKey = Object.keys(jsonInfo)[0];
+      const jsonData = jsonInfo[currentKey];
+      
+      this.setState({ currentKey });
+
+      sync2Storage(jsonData, keyInStore, currentKey);
+      this.updateJsonData(jsonData, false, true);
+
+      this.togglePreview();
+    }
   }
 
   changeJsonData = jsonData => {
-    const {keyInStore} = this.props;
+    const {keyInStore, mode} = this.props;
     const {currentKey} = this.state;
-    sync2Storage(jsonData, keyInStore, currentKey);
 
+    sync2Storage(jsonData, keyInStore, currentKey);
     this.updateJsonData(jsonData);
+
+    // MODE为COMPONENT时，点击编辑触发键触发
+    if(mode === MODE.COMPONENT && this.triggeredByEditEvent) {
+      this.notifyForEditedEvent(jsonData);
+    }
   };
+
+  notifyForEditedEvent = jsonData => {
+    emitter.emit(JSON_EDITED_EVENT, jsonData);
+  }
 
   updateJsonData = (jsonData, fromStorage) => {
     const {keyInStore} = this.props;
     const {currentKey} = this.state;
+
     if (fromStorage) {
       jsonData = getJsonDataFromStorage(keyInStore, currentKey);
     }
@@ -69,6 +118,9 @@ export default class JsonEditorController extends PureComponent {
   };
 
   togglePreview = () => {
+    if (this.props.status === EDITOR_PANEL_STATUS.open) {
+      this.triggeredByEditEvent = false; 
+    } 
     this.props.onToggle();
   };
 
@@ -79,7 +131,6 @@ export default class JsonEditorController extends PureComponent {
   renderPreview() {
     const {status, header, mode} = this.props;
     const {jsonData, jsonEditorConfig} = this.state;
-
     return (
       <ComponentView
         mode={mode}

@@ -26,7 +26,7 @@ export const sync2Storage = (jsonData, namespace, key) => {
 
   let result;
   if (!dataStorage) {
-    result = {[namespace]: {[key]: jsonData}};
+    result = {[key]: jsonData};
   } else {
     const jsonNamespace = JSON.parse(dataStorage);
     jsonNamespace[key] = jsonData;

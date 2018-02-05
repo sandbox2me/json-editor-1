@@ -1,6 +1,15 @@
+export const KEY_IN_STORE = 'jsonEditor';
+export const JSON_EDITOR_EVENT = 'jsonEditorEvent';
+export const JSON_EDITED_EVENT = 'jsonEditedEvent';
+
 export const MODE = {
   PAGE: 'PAGE',
   COMPONENT: 'COMPONENT',
+};
+
+export const EDITOR_PANEL_STATUS = {
+  close: 'close',
+  open: 'open',
 };
 
 export const OPER_TYPE = {

@@ -3,7 +3,7 @@ import React, {PureComponent} from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
 import {Icon} from 'antd';
-import PreviewTrigger from './Trigger';
+import PreviewTrigger from './PreviewTrigger';
 import Preview from '../../Preview';
 import EditPanel from '../EditPanel';
 import Toolbar from '../Toolbar';
