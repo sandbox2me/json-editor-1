@@ -11,7 +11,7 @@ import {KEY_IN_STORE, JSON_EDITOR_CONFIG, JSON_EDITOR_EVENT, EDITOR_PANEL_STATUS
 import {getJsonDataFromStorage, sync2Storage} from '../../../src/util';
 import { emitter } from './index';
 
-// import jsonData from '../../mock/json';
+import jsonData from '../../mock/json';
 
 export default class JsonEditorController extends PureComponent {
   static propTypes = {
@@ -39,7 +39,7 @@ export default class JsonEditorController extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      jsonData: {},
+      jsonData,
       currentKey: props.currentKey || props.defaultCurrentKey,
       jsonEditorConfig: {...JSON_EDITOR_CONFIG},
     };

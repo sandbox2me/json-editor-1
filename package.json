@@ -1,14 +1,19 @@
 {
-  "private": false,
+  "name": "@alipay/json-editor",
+  "version": "0.1.1-beta.1",
+  "main": "src/components/JsonEditor",
   "keyword": [
     "json-editor",
     "react",
-    "visualization editor",
-    "locastorage",
-    "cross-page"
+    "visualization json editor",
+    "locastorage"
   ],
   "entry": {
     "index": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@https://github.com/Fairyshi/json-editor.git"
   },
   "dependencies": {
     "antd": "^3.1.6",
@@ -44,5 +49,6 @@
     "lint": "eslint --ext .js,.jsx src/",
     "start": "dora --plugins webpack",
     "test": "atool-test-mocha ./**/__tests__/*-test.js"
-  }
+  },
+  "author": "shifei.sf"
 }
